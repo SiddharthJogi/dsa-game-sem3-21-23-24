@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games for Alzheimer's Care Hub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #74b9ff, #81ecec); /* Soft gradient background */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 32px;
+            color: #0984e3;
+            margin-bottom: 20px;
+        }
+        .game-thumbnail-container {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        }
+        .game-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .game-link {
+            flex-grow: 1;
+            margin-left: 15px;
+            padding: 10px 20px;
+            background-color: #0984e3;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 18px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+        .game-link:hover {
+            background-color: #74b9ff;
+            transform: scale(1.05);
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background-color: #636e72;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #2d3436;
+        }
+
+        @media (max-width: 600px) {
+            .game-thumbnail-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .game-link {
+                margin: 10px 0 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Games for Alzheimer's Care Hub</h1>
+
+        <!-- Game 1: Sudoku -->
+        <div class="game-thumbnail-container">
+            <img class="game-thumbnail" src="sudoku.png" alt="Sudoku Thumbnail">
+            <a class="game-link" href="sudoku.html">Play Sudoku</a>
+        </div>
+
+        <!-- Game 2: Schulte's Table -->
+        <div class="game-thumbnail-container">
+            <img class="game-thumbnail" src="schulte.png" alt="Schulte's Table Thumbnail">
+            <a class="game-link" href="schlute.html">Play Schulte's Table</a>
+        </div>
+
+        <!-- Game 3: Memory Game -->
+        <div class="game-thumbnail-container">
+            <img class="game-thumbnail" src="memorygames.png" alt="Memory Games Thumbnail">
+            <a class="game-link" href="memorygame.html">Play Memory Game</a>
+        </div>
+
+        <a class="back-button" href="home.html">Back to Home</a>
+    </div>
+
+</body>
+</html>

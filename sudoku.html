@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sudoku Game</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+
+  body {
+    background: linear-gradient(135deg, #74b9ff, #81ecec); /* Light gradient background */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #2d3436;
+  }
+
+  #container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 90%;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    color: #0984e3;
+    font-size: 32px;
+  }
+
+  table {
+    border-collapse: collapse;
+    margin: 20px auto;
+    width: 100%; /* Make table responsive */
+    max-width: 360px;
+  }
+
+  td {
+    width: 11%; /* Adaptive size for smaller screens */
+    height: 40px;
+    border: 1px solid #b2bec3;
+    text-align: center;
+    font-size: 22px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  td.initial {
+    background-color: #dfe6e9;
+    font-weight: bold;
+    cursor: default;
+  }
+
+  td.highlight {
+    background-color: #ffeaa7;
+  }
+
+  button {
+    background-color: #0984e3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 5px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background-color: #74b9ff;
+    transform: scale(1.05);
+  }
+
+  #result {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #636e72;
+  }
+
+  .back-button {
+    margin-top: 20px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a button {
+    background-color: #636e72;
+  }
+
+  /* Responsive design for smaller screens */
+  @media (max-width: 400px) {
+    td {
+      font-size: 18px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <h1>SUDOKU</h1>
+  <table id="sudokuTable"></table>
+  <p id="result">Fill the puzzle and check your solution!</p>
+
+  <button onclick="generateSudoku()">Generate New Puzzle</button>
+  <div style="margin-top: 10px;">
+    <span>Fill number:</span>
+    <br>
+    <button onclick="fillNumber(1)">1</button>
+    <button onclick="fillNumber(2)">2</button>
+    <button onclick="fillNumber(3)">3</button>
+    <button onclick="fillNumber(4)">4</button>
+    <button onclick="fillNumber(5)">5</button>
+    <button onclick="fillNumber(6)">6</button>
+    <button onclick="fillNumber(7)">7</button>
+    <button onclick="fillNumber(8)">8</button>
+    <button onclick="fillNumber(9)">9</button>
+  </div>
+
+  <div class="back-button">
+    <a href="games.html">
+      <button>Back to Games</button>
+    </a>
+  </div>
+</div>
+
+<script>
+let sudokuPuzzle;
+let selectedCell = null;
+
+function generateSudoku() {
+  const table = document.getElementById('sudokuTable');
+  table.innerHTML = ''; // Clear the table
+  sudokuPuzzle = generateRandomSudoku(); // Generate new puzzle
+
+  for (let i = 0; i < 9; i++) {
+    const row = document.createElement('tr');
+    for (let j = 0; j < 9; j++) {
+      const cell = document.createElement('td');
+      cell.textContent = sudokuPuzzle[i][j] === 0 ? '' : sudokuPuzzle[i][j];
+      cell.onclick = () => selectCell(i, j);
+
+      if (sudokuPuzzle[i][j] !== 0) {
+        cell.classList.add('initial');
+      }
+      row.appendChild(cell);
+    }
+    table.appendChild(row);
+  }
+}
+
+function generateRandomSudoku() {
+  const board = Array.from({ length: 9 }, () => Array(9).fill(0));
+  solveSudoku(board);
+
+  const puzzle = JSON.parse(JSON.stringify(board)); // Clone board
+  for (let i = 0; i < 40; i++) {
+    const row = Math.floor(Math.random() * 9);
+    const col = Math.floor(Math.random() * 9);
+    puzzle[row][col] = 0;
+  }
+
+  return puzzle;
+}
+
+function solveSudoku(board) {
+  const emptyCell = findEmptyCell(board);
+  if (!emptyCell) return true;
+
+  const [row, col] = emptyCell;
+  for (let num = 1; num <= 9; num++) {
+    if (isValid(board, row, col, num)) {
+      board[row][col] = num;
+      if (solveSudoku(board)) return true;
+      board[row][col] = 0;
+    }
+  }
+  return false;
+}
+
+function isValid(board, row, col, num) {
+  return (
+    !usedInRow(board, row, num) &&
+    !usedInColumn(board, col, num) &&
+    !usedInBox(board, row - (row % 3), col - (col % 3), num)
+  );
+}
+
+function usedInRow(board, row, num) {
+  return board[row].includes(num);
+}
+
+function usedInColumn(board, col, num) {
+  return board.some(row => row[col] === num);
+}
+
+function usedInBox(board, startRow, startCol, num) {
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      if (board[startRow + i][startCol + j] === num) return true;
+    }
+  }
+  return false;
+}
+
+function findEmptyCell(board) {
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (board[i][j] === 0) return [i, j];
+    }
+  }
+  return null;
+}
+
+function selectCell(row, col) {
+  const table = document.getElementById('sudokuTable');
+  if (selectedCell) {
+    const [prevRow, prevCol] = selectedCell;
+    table.rows[prevRow].cells[prevCol].classList.remove('highlight');
+  }
+  selectedCell = [row, col];
+  table.rows[row].cells[col].classList.add('highlight');
+}
+
+function fillNumber(number) {
+  if (selectedCell) {
+    const [row, col] = selectedCell;
+    if (sudokuPuzzle[row][col] === 0) {
+      sudokuPuzzle[row][col] = number;
+      document.getElementById('sudokuTable').rows[row].cells[col].textContent = number;
+      checkSolution();
+    }
+  }
+}
+
+function checkSolution() {
+  const isCorrect = sudokuPuzzle.every((row, i) =>
+    row.every((num, j) => num === 0 || isValid(sudokuPuzzle, i, j, num))
+  );
+  document.getElementById('result').textContent = isCorrect
+    ? 'Congratulations! You solved the Sudoku puzzle!'
+    : 'Keep going! Solution is not correct yet.';
+}
+
+generateSudoku();
+</script>
+
+</body>
+</html>

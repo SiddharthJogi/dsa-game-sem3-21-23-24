@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concentration Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #74b9ff, #a29bfe); /* Soft gradient background */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            font-size: 32px;
+            color: #0984e3;
+            margin-bottom: 20px;
+        }
+        #gameBoard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* Grid layout for cards */
+            gap: 10px;
+            margin-top: 20px;
+            justify-items: center;
+        }
+        .card {
+            width: 100px;
+            height: 150px;
+            border-radius: 10px;
+            background-color: #0984e3; /* Default card background */
+            color: white;
+            font-size: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .card.hidden {
+            background-color: #dfe6e9; /* Hidden state background */
+            color: transparent;
+            cursor: pointer;
+        }
+        .card.matched {
+            background-color: #00b894; /* Matched card background */
+            color: white;
+            cursor: default;
+        }
+        .card:hover {
+            transform: scale(1.05); /* Interactive hover effect */
+        }
+        .back-button {
+            margin-top: 30px;
+        }
+        .back-button a {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #636e72;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+        .back-button a:hover {
+            background-color: #2d3436;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 600px) {
+            #gameBoard {
+                grid-template-columns: repeat(2, 1fr); /* Adjust for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Concentration Game</h1>
+        <div id="gameBoard"></div>
+
+        <!-- Back to Games button -->
+        <div class="back-button">
+            <a href="games.html">Back to Games</a>
+        </div>
+    </div>
+
+    <script>
+        const symbols = ['♠', '♣', '♥', '♦', '♠', '♣', '♥', '♦', 
+                         '♠', '♣', '♥', '♦', '♠', '♣', '♥', '♦']; // Symbols for cards
+        let flippedCard = null;
+        let matchedCards = [];
+
+        // Shuffle symbols array
+        for (let i = symbols.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [symbols[i], symbols[j]] = [symbols[j], symbols[i]];
+        }
+
+        function createBoard() {
+            const gameBoard = document.getElementById('gameBoard');
+            symbols.forEach(symbol => {
+                const card = document.createElement('div');
+                card.classList.add('card', 'hidden');
+                card.textContent = symbol;
+                card.addEventListener('click', () => flipCard(card));
+                gameBoard.appendChild(card);
+            });
+        }
+
+        function flipCard(card) {
+            if (!card.classList.contains('hidden') || card === flippedCard) return;
+
+            card.classList.remove('hidden');
+            if (flippedCard) {
+                if (flippedCard.textContent === card.textContent) {
+                    flippedCard.classList.add('matched');
+                    card.classList.add('matched');
+                    matchedCards.push(flippedCard, card);
+                    flippedCard = null;
+
+                    if (matchedCards.length === symbols.length) {
+                        setTimeout(() => alert('Congratulations! You matched all the cards!'), 500);
+                    }
+                } else {
+                    setTimeout(() => {
+                        flippedCard.classList.add('hidden');
+                        card.classList.add('hidden');
+                        flippedCard = null;
+                    }, 1000);
+                }
+            } else {
+                flippedCard = card;
+            }
+        }
+
+        createBoard();
+    </script>
+
+</body>
+</html>
