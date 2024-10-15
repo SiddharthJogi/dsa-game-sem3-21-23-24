@@ -105,16 +105,20 @@
     <script>
         const symbols = ['♠', '♣', '♥', '♦', '♠', '♣', '♥', '♦', 
                          '♠', '♣', '♥', '♦', '♠', '♣', '♥', '♦']; // Symbols for cards
-        let flippedCard = null;
         let matchedCards = [];
+        let cardStack = []; // Stack to manage flipped cards
 
-        // Shuffle symbols array
-        for (let i = symbols.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [symbols[i], symbols[j]] = [symbols[j], symbols[i]];
+        // Shuffle symbols array using Fisher-Yates Shuffle
+        function shuffleArray(array) {
+            let n = array.length;
+            while (n > 1) {
+                const i = Math.floor(Math.random() * n--);
+                [array[n], array[i]] = [array[i], array[n]];
+            }
         }
 
         function createBoard() {
+            shuffleArray(symbols);
             const gameBoard = document.getElementById('gameBoard');
             symbols.forEach(symbol => {
                 const card = document.createElement('div');
@@ -126,28 +130,29 @@
         }
 
         function flipCard(card) {
-            if (!card.classList.contains('hidden') || card === flippedCard) return;
+            if (!card.classList.contains('hidden') || cardStack.length === 2) return;
 
             card.classList.remove('hidden');
-            if (flippedCard) {
-                if (flippedCard.textContent === card.textContent) {
-                    flippedCard.classList.add('matched');
-                    card.classList.add('matched');
-                    matchedCards.push(flippedCard, card);
-                    flippedCard = null;
+            cardStack.push(card); // Push the flipped card onto the stack
 
+            if (cardStack.length === 2) {
+                const [firstCard, secondCard] = cardStack;
+                if (firstCard.textContent === secondCard.textContent) {
+                    firstCard.classList.add('matched');
+                    secondCard.classList.add('matched');
+                    matchedCards.push(firstCard);
+                    matchedCards.push(secondCard);
+                    cardStack = []; // Clear the stack
                     if (matchedCards.length === symbols.length) {
                         setTimeout(() => alert('Congratulations! You matched all the cards!'), 500);
                     }
                 } else {
                     setTimeout(() => {
-                        flippedCard.classList.add('hidden');
-                        card.classList.add('hidden');
-                        flippedCard = null;
+                        firstCard.classList.add('hidden');
+                        secondCard.classList.add('hidden');
+                        cardStack = []; // Clear the stack after hiding
                     }, 1000);
                 }
-            } else {
-                flippedCard = card;
             }
         }
 
