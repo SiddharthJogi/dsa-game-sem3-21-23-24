@@ -115,6 +115,7 @@
   <p id="result">Fill the puzzle and check your solution!</p>
 
   <button onclick="generateSudoku()">Generate New Puzzle</button>
+  <button onclick="undo()">Undo</button>
   <div style="margin-top: 10px;">
     <span>Fill number:</span>
     <br>
@@ -139,11 +140,13 @@
 <script>
 let sudokuPuzzle;
 let selectedCell = null;
+let stack = []; // Stack to store undo operations
 
 function generateSudoku() {
   const table = document.getElementById('sudokuTable');
   table.innerHTML = ''; // Clear the table
   sudokuPuzzle = generateRandomSudoku(); // Generate new puzzle
+  stack = []; // Clear the stack
 
   for (let i = 0; i < 9; i++) {
     const row = document.createElement('tr');
@@ -238,10 +241,19 @@ function fillNumber(number) {
   if (selectedCell) {
     const [row, col] = selectedCell;
     if (sudokuPuzzle[row][col] === 0) {
+      stack.push([row, col, sudokuPuzzle[row][col]]); // Push the current state to the stack
       sudokuPuzzle[row][col] = number;
       document.getElementById('sudokuTable').rows[row].cells[col].textContent = number;
       checkSolution();
     }
+  }
+}
+
+function undo() {
+  if (stack.length > 0) {
+    const [row, col, prevValue] = stack.pop();
+    sudokuPuzzle[row][col] = prevValue;
+    document.getElementById('sudokuTable').rows[row].cells[col].textContent = prevValue === 0 ? '' : prevValue;
   }
 }
 

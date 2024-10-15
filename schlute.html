@@ -1,224 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Random Schulte Table</title>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: linear-gradient(135deg, #74b9ff, #81ecec); /* Smooth gradient */
-    font-family: 'Arial', sans-serif;
-  }
-
-  #container {
-    text-align: center;
-    background-color: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-    width: 90%; /* Responsive width */
-    max-width: 400px;
-  }
-
-  h1 {
-    margin-bottom: 10px;
-    color: #333;
-  }
-
-  label {
-    font-weight: bold;
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  select {
-    padding: 10px;
-    border: 2px solid #007bff;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  select:hover {
-    background-color: #007bff;
-    color: white;
-  }
-
-  table {
-    margin: 20px auto;
-    border-collapse: collapse;
-  }
-
-  td {
-    width: 60px;
-    height: 60px;
-    border: 2px solid #333;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  td:hover {
-    background-color: #f0f0f0;
-  }
-
-  .correct {
-    background-color: #7CFC00;
-    color: white;
-  }
-
-  .wrong {
-    background-color: #FF6347;
-    color: white;
-  }
-
-  #timer {
-    margin-bottom: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #444;
-  }
-
-  button {
-    padding: 12px 24px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-  }
-
-  button:hover {
-    background-color: #0056b3;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  /* Add media query for smaller screens */
-  @media (max-width: 500px) {
-    td {
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-    }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Schulte Table</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #74b9ff, #81ecec);
+            font-family: 'Arial', sans-serif;
+        }
+        #container {
+            text-align: center;
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        select {
+            padding: 10px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        select:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        td {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #333;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        td:hover {
+            background-color: #f0f0f0;
+        }
+        .correct {
+            background-color: #7CFC00;
+            color: white;
+        }
+        .wrong {
+            background-color: #FF6347;
+            color: white;
+        }
+        #timer {
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #444;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            text-decoration: none;
+        }
+        @media (max-width: 500px) {
+            td {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div id="container">
-  <h1>Schulte Table Game</h1>
-  
-  <label for="size">Select Table Size:</label>
-  <select id="size" onchange="generateRandomTable()">
-    <option value="4">4x4</option>
-    <option value="5">5x5</option>
-    <option value="6">6x6</option>
-  </select>
+    <div id="container">
+        <h1>Schulte Table Game</h1>
+        
+        <label for="size">Select Table Size:</label>
+        <select id="size" onchange="generateRandomTable()">
+            <option value="4">4x4</option>
+            <option value="5">5x5</option>
+            <option value="6">6x6</option>
+        </select>
 
-  <table id="schulteTable"></table>
+        <table id="schulteTable"></table>
 
-  <p id="timer">Time: 0 seconds</p>
-  <button onclick="startTimer()">Start Timer</button>
+        <p id="timer">Time: 0.0 seconds</p>
+        <button id="startButton" onclick="startGame()">Start Game</button>
 
-  <br><br>
+        <br><br>
 
-  <!-- Button to navigate back -->
-  <a href="games.html">
-    <button>Back to Games</button>
-  </a>
-</div>
+        <a href="games.html">
+            <button>Back to Games</button>
+        </a>
+    </div>
 
-<script>
-let currentNumber = 1;
-let startTime, endTime;
-let timerInterval;
+    <script>
+        let numberQueue = [];
+        let startTime, timerInterval;
+        let isGameActive = false;
 
-function generateRandomTable() {
-  clearInterval(timerInterval); // Reset timer when generating new table
-  startTime = null;
-  endTime = null;
+        function generateRandomTable() {
+            const size = document.getElementById('size').value;
+            const rows = size;
+            const cols = size;
 
-  const size = document.getElementById('size').value;
-  const rows = size;
-  const cols = size;
+            const numbers = Array.from({ length: rows * cols }, (_, i) => i + 1);
+            numbers.sort(() => Math.random() - 0.5);
 
-  const numbers = Array.from({ length: rows * cols }, (_, i) => i + 1);
-  numbers.sort(() => Math.random() - 0.5); // Shuffle numbers
+            const table = document.getElementById('schulteTable');
+            table.innerHTML = '';
 
-  const table = document.getElementById('schulteTable');
-  table.innerHTML = ''; // Clear the table
+            for (let i = 0; i < rows; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < cols; j++) {
+                    const cell = document.createElement('td');
+                    cell.textContent = numbers[i * cols + j];
+                    cell.onclick = () => checkNumber(parseInt(cell.textContent), cell);
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
 
-  for (let i = 0; i < rows; i++) {
-    const row = document.createElement('tr');
-    for (let j = 0; j < cols; j++) {
-      const cell = document.createElement('td');
-      cell.textContent = numbers[i * cols + j];
-      cell.onclick = () => checkNumber(parseInt(cell.textContent), cell);
-      row.appendChild(cell);
-    }
-    table.appendChild(row);
-  }
+            numberQueue = numbers.sort((a, b) => a - b);
+            resetGame();
+        }
 
-  currentNumber = 1;
-}
+        function startGame() {
+            if (!isGameActive) {
+                isGameActive = true;
+                startTime = new Date().getTime();
+                timerInterval = setInterval(updateTimer, 100);
+                document.getElementById('startButton').textContent = 'Reset Game';
+            } else {
+                resetGame();
+                generateRandomTable();
+            }
+        }
 
-function startTimer() {
-  startTime = new Date().getTime();
-  timerInterval = setInterval(updateTimer, 1000);
-}
+        function resetGame() {
+            clearInterval(timerInterval);
+            isGameActive = false;
+            startTime = null;
+            document.getElementById('timer').textContent = 'Time: 0.0 seconds';
+            document.getElementById('startButton').textContent = 'Start Game';
+            
+            const cells = document.querySelectorAll('#schulteTable td');
+            cells.forEach(cell => {
+                cell.classList.remove('correct', 'wrong');
+            });
+        }
 
-function updateTimer() {
-  if (startTime) {
-    const currentTime = new Date().getTime();
-    const elapsedTime = Math.floor((currentTime - startTime) / 1000);
-    document.getElementById('timer').textContent = `Time: ${elapsedTime} seconds`;
-  }
-}
+        function updateTimer() {
+            if (startTime && isGameActive) {
+                const currentTime = new Date().getTime();
+                const elapsedTime = (currentTime - startTime) / 1000;
+                document.getElementById('timer').textContent = `Time: ${elapsedTime.toFixed(1)} seconds`;
+            }
+        }
 
-function stopTimer() {
-  endTime = new Date().getTime();
-}
+        function checkNumber(number, cell) {
+            if (!isGameActive) {
+                startGame();
+            }
 
-function checkNumber(number, cell) {
-  if (number === currentNumber) {
-    cell.classList.add('correct');
-    currentNumber++;
-    if (currentNumber > parseInt(document.getElementById('size').value) ** 2) {
-      alert('Congratulations! You completed the Schulte Table!');
-      stopTimer();
-      clearInterval(timerInterval);
-      generateRandomTable(); // Generate a new table
-    }
-  } else {
-    cell.classList.add('wrong');
-    setTimeout(() => {
-      cell.classList.remove('wrong');
-    }, 500);
-  }
-}
+            if (number === numberQueue[0]) {
+                cell.classList.add('correct');
+                numberQueue.shift();
 
-// Initialize the game
-generateRandomTable();
-</script>
+                if (numberQueue.length === 0) {
+                    stopGame();
+                }
+            } else {
+                cell.classList.add('wrong');
+                setTimeout(() => {
+                    cell.classList.remove('wrong');
+                }, 500);
+            }
+        }
+
+        function stopGame() {
+            isGameActive = false;
+            clearInterval(timerInterval);
+            const endTime = new Date().getTime();
+            const elapsedTime = ((endTime - startTime) / 1000).toFixed(1);
+            alert(`Congratulations! You completed the Schulte Table in ${elapsedTime} seconds!`);
+            document.getElementById('startButton').textContent = 'Start New Game';
+        }
+
+        generateRandomTable();
+    </script>
 </body>
 </html>
