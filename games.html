@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games for Alzheimer's Care Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center align content */
+        }
+        h1 {
+            color: #333;
+        }
+        .game-option {
+            margin-top: 20px;
+        }
+        .game-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .game-link:hover {
+            background-color: #0056b3;
+        }
+        .game-thumbnail-container {
+            margin-bottom: 20px; /* Add margin for separation */
+        }
+        .game-thumbnail {
+            display: block;
+            width: 100px; /* Adjust width as needed */
+            height: auto;
+            margin: 0 auto 10px; /* Center align and add margin */
+            border-radius: 8px; /* Rounded corners */
+            background-color: #fff; /* Add background color */
+            padding: 5px; /* Add padding for separation */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+        }
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px 30px; /* Increase padding for bigger button */
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 20px; /* Increase border-radius for rounded corners */
+            transition: background-color 0.3s ease; /* Add transition for hover effect */
+        }
+        .back-button:hover {
+            background-color: #0056b3; /* Change background color on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Games for Alzheimer's Care Hub</h1>
+        <!-- Thumbnails for the games -->
+        <div class="game-thumbnail-container">
+            <img class="game-thumbnail" src="sudoku.png" alt="Sudoku Thumbnail">
+            <a class="game-link" href="sudoku.html">Play Sudoku</a>
+        </div>
+        <div class="game-thumbnail-container">
+            <img class="game-thumbnail" src="schulte.png" alt="Schulte's Table Thumbnail">
+            <a class="game-link" href="schlute.html">Play Schulte's Table</a>
+        </div>
+        <div class="game-thumbnail-container">
+            <img class="game-thumbnail" src="tictak.png" alt="Tic Tac Toe Thumbnail">
+            <a class="game-link" href="tictactoe1.html">Play Tic Tac Toe</a>
+        </div>
+        <div class="game-thumbnail-container">
+            <img class="game-thumbnail" src="memorygames.png" alt="Memory Games Thumbnail">
+            <a class="game-link" href="memorygame.html">Play Memory Game</a>
+        </div>
+    </div>
+
+    <script>
+        // Add back button dynamically
+        document.addEventListener('DOMContentLoaded', function() {
+            var container = document.querySelector('.container');
+            var backButton = document.createElement('a');
+            backButton.textContent = 'Back to Home';
+            backButton.href = 'index.html';
+            backButton.classList.add('back-button'); // Add back-button class
+            container.appendChild(backButton);
+        });
+    </script>
+</body>
+</html>
